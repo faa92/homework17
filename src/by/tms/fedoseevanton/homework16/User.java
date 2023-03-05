@@ -6,9 +6,8 @@ public class User {
     User(String userNickName) {
         this.userNickName = userNickName;
     }
-
     public String getUserNickName() {
-        return userNickName.toString();
+        return userNickName;
     }
 }
 
