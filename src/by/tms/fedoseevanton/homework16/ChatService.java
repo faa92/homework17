@@ -31,15 +31,18 @@ public class ChatService {
 
     private boolean isUserHitTimeInterval(User user) {
         LocalDateTime timeNow = LocalDateTime.now();
+        int count = 0;
         for (int i = allPost.length - 1; i > 0; i--) {
-            if ((user.equals(allPost[i].getAuthorMessage()))) {
-                if (allPost[i].getPostCreateTime().isAfter(timeNow.minus(timeInterval))) {
+            if ((user.equals(allPost[i].getAuthorMessage().getUserNickName()))) {
+                if (count++ > limitPosts || allPost[i].getPostCreateTime().isAfter(timeNow.minus(timeInterval))) {
+                    return false;
+                }
+                if (allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeInterval))) {
                     return true;
                 }
             }
-            return true;
         }
-        return false;
+        return true;
     }
 
     // сохранить текущее время
