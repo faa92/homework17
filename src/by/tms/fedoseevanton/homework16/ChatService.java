@@ -12,6 +12,7 @@ public class ChatService {
     public ChatService(int limitPosts, Duration rateLimiting) {
         this.limitPosts = limitPosts;
         this.timeInterval = rateLimiting;
+        allPost = new Post[0];
     }
 
     public boolean addNewPost(User user, String message) {
@@ -34,25 +35,17 @@ public class ChatService {
         int count = 0;
         for (int i = allPost.length - 1; i > 0; i--) {
             if ((user.equals(allPost[i].getAuthorMessage().getUserNickName()))) {
-                if (count++ > limitPosts || allPost[i].getPostCreateTime().isAfter(timeNow.minus(timeInterval))) {
+                count++;
+                if (count > limitPosts || allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeInterval))) {
                     return false;
                 }
-                if (allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeInterval))) {
+                if (allPost[i].getPostCreateTime().isAfter(timeNow.minus(timeInterval))) {
                     return true;
                 }
             }
         }
         return true;
     }
-
-    // сохранить текущее время
-    //пройти по всем постам с обратной стороны и проверить что юзер одинаковый ()
-    // иф для опред поста юзер одинаковый И время поста является бифо времени текущего - тайи рейт
-    //внутри ещё один иф и проверяем время - таймрейт
-    //если иф проходит возвр тру, если нет то фолс
-    // если юзера не нашло возвр тру
-
-
     public Post[] getPostHistory() {
         return Arrays.copyOf(allPost, allPost.length);
     }

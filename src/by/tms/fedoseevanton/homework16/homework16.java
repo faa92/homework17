@@ -7,9 +7,9 @@ import java.util.Scanner;
 public class homework16 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter limit time post (seconds) : ");
+        System.out.print("Enter limit time post (seconds) : ");
         Duration duration = Duration.ofSeconds(Integer.parseInt(scanner.nextLine()));
-        System.out.println("Enter a post limit: ");
+        System.out.print("Enter a post limit: ");
         int postLimit = scanner.nextInt();
         ChatService service = new ChatService(postLimit, duration);
 
@@ -17,13 +17,22 @@ public class homework16 {
                 1. Chat
                 2. History
                 0. Exit""");
-        System.out.print("Choose task: ");
+        System.out.print("Your choice: ");
         int task = scanner.nextInt();
         switch (task) {
-
             case 1 -> {
-
-
+                do {
+                    Scanner scanner1 = new Scanner(System.in);
+                    System.out.print("Enter nickname: ");
+                    User user = new User(scanner1.nextLine());
+                    System.out.print("Enter message: ");
+                    String message = scanner1.nextLine();
+                    if (service.addNewPost(user, message)) {
+                        System.out.println("New post add!");
+                    } else {
+                        System.out.println("Flood");
+                    }
+                } while (true);
             }
             case 2 -> {
                 System.out.println("Chat history: ");
