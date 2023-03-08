@@ -36,7 +36,7 @@ public class ChatService {
         for (int i = allPost.length - 1; i >= 0; i--) {
             if ((user.getUserNickName().equals(allPost[i].getAuthorMessage().getUserNickName()))) {
                 if (allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeInterval))) {
-                    return true;
+                    break;
                 }
                 count++;
                 if (count == limitPosts) {
