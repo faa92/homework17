@@ -30,7 +30,7 @@ public class homework16 {
                     if (service.addNewPost(user, message)) {
                         System.out.println("New post add!");
                     } else {
-                        System.out.println("Flood");
+                        System.out.println("FLOOD !!!");
                     }
                 } while (true);
             }
