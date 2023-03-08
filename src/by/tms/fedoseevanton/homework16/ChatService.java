@@ -14,7 +14,6 @@ public class ChatService {
         this.timeInterval = rateLimiting;
         allPost = new Post[0];
     }
-
     public boolean addNewPost(User user, String message) {
         if (isUserHitTimeInterval(user)) {
             savePost(user, message);
@@ -23,7 +22,6 @@ public class ChatService {
 
         return false;
     }
-
     private void savePost(User user, String message) {
         allPost = Arrays.copyOf(allPost, allPost.length + 1);
         allPost[allPost.length - 1] = new Post(user, message, LocalDateTime.now());

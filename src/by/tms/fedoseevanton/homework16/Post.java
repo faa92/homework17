@@ -13,8 +13,8 @@ public class Post {
         this.messageTimeCreate = massageTimeCreate;
     }
 
-    public User getAuthorMessage() {
-        return authorMassage;
+    public String getAuthorMessage() {
+        return authorMassage.toString();
     }
 
     public String getContent() {
