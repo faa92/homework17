@@ -35,12 +35,12 @@ public class ChatService {
         int count = 0;
         for (int i = allPost.length - 1; i >= 0; i--) {
             if ((user.getUserNickName().equals(allPost[i].getAuthorMessage().getUserNickName()))) {
-                if (allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeInterval))) {
-                    break;
-                }
                 count++;
                 if (count == limitPosts) {
                     return false;
+                }
+                if (allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeInterval))) {
+                    break;
                 }
             }
         }
