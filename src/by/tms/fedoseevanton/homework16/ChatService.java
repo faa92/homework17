@@ -6,12 +6,12 @@ import java.util.Arrays;
 
 public class ChatService {
     private Post[] allPost;
-    private final Duration timeInterval;
+    private final Duration timeIntervalCreatePost;
     private final int limitPosts;
 
     public ChatService(int limitPosts, Duration rateLimiting) {
         this.limitPosts = limitPosts;
-        this.timeInterval = rateLimiting;
+        this.timeIntervalCreatePost = rateLimiting;
         allPost = new Post[0];
     }
 
@@ -39,7 +39,10 @@ public class ChatService {
                 if (count == limitPosts) {
                     return false;
                 }
-                if (allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeInterval))) {
+                if (allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeIntervalCreatePost))) {
+                    return true;
+                }
+                if (!(user.getUserNickName().equals(allPost[i].getAuthorMessage().getUserNickName())) && count == 0) {
                     break;
                 }
             }
