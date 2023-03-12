@@ -1,7 +1,7 @@
 package by.tms.fedoseevanton.homework16;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 
 public class ChatService {
@@ -16,7 +16,7 @@ public class ChatService {
     }
 
     public boolean addNewPost(User user, String message) {
-        LocalDateTime timeNow = LocalDateTime.now();
+        Instant timeNow = Instant.now();
         if (isUserHitTimeInterval(user, timeNow)) {
             savePost(user, message, timeNow);
             return true;
@@ -25,25 +25,22 @@ public class ChatService {
         return false;
     }
 
-    private void savePost(User user, String message, LocalDateTime timeNow) {
+    private void savePost(User user, String message, Instant timeNow) {
         allPost = Arrays.copyOf(allPost, allPost.length + 1);
         allPost[allPost.length - 1] = new Post(user, message, timeNow);
     }
 
 
-    private boolean isUserHitTimeInterval(User user, LocalDateTime timeNow) {
+    private boolean isUserHitTimeInterval(User user, Instant timeNow) {
         int count = 0;
         for (int i = allPost.length - 1; i >= 0; i--) {
+            if (allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeIntervalCreatePost))) {
+                return true;
+            }
             if ((user.getUserNickName().equals(allPost[i].getAuthorMessage().getUserNickName()))) {
                 count++;
                 if (count == limitPosts) {
                     return false;
-                }
-                if (allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeIntervalCreatePost))) {
-                    return true;
-                }
-                if (!(user.getUserNickName().equals(allPost[i].getAuthorMessage().getUserNickName())) && count == 0) {
-                    break;
                 }
             }
         }

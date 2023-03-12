@@ -28,9 +28,9 @@ public class homework16 {
                     System.out.print("Enter message: ");
                     String message = scanner1.nextLine();
                     if (service.addNewPost(user, message)) {
-                        System.out.println("New post add!");
+                        System.out.println("New post add!" + "\n");
                     } else {
-                        System.out.println("FLOOD !!!");
+                        System.out.println("FLOOD !!!" + "\n");
                     }
                 } while (true);
             }

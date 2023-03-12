@@ -1,13 +1,13 @@
 package by.tms.fedoseevanton.homework16;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public class Post {
     private final User authorMassage;
     private final String massage;
-    private final LocalDateTime messageTimeCreate;
+    private final Instant messageTimeCreate;
 
-    public Post(User authorMassage, String massage, LocalDateTime massageTimeCreate) {
+    public Post(User authorMassage, String massage, Instant massageTimeCreate) {
         this.authorMassage = authorMassage;
         this.massage = massage;
         this.messageTimeCreate = massageTimeCreate;
@@ -21,7 +21,7 @@ public class Post {
         return massage;
     }
 
-    public LocalDateTime getPostCreateTime() {
+    public Instant getPostCreateTime() {
         return messageTimeCreate;
     }
 }
