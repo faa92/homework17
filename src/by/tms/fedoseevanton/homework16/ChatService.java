@@ -15,14 +15,14 @@ public class ChatService {
         allPost = new Post[0];
     }
 
-    public boolean addNewPost(User user, String message) {
+    public boolean addNewPost(User user, String message) throws CheckedException {
         Instant timeNow = Instant.now();
-        if (isUserHitTimeInterval(user, timeNow)) {
-            savePost(user, message, timeNow);
-            return true;
-        }
 
-        return false;
+        isUserHitTimeInterval(user, timeNow);
+
+        savePost(user, message, timeNow);
+
+        return true;
     }
 
     private void savePost(User user, String message, Instant timeNow) {
@@ -31,20 +31,19 @@ public class ChatService {
     }
 
 
-    private boolean isUserHitTimeInterval(User user, Instant timeNow) {
+    private void isUserHitTimeInterval(User user, Instant timeNow) throws CheckedException {
         int count = 0;
         for (int i = allPost.length - 1; i >= 0; i--) {
             if (allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeIntervalCreatePost))) {
-                return true;
+                return;
             }
             if ((user.getUserNickName().equals(allPost[i].getAuthorMessage().getUserNickName()))) {
                 count++;
                 if (count == limitPosts) {
-                    return false;
+                    throw new CheckedException(allPost[i].getPostCreateTime().plus(timeIntervalCreatePost));
                 }
             }
         }
-        return true;
     }
     public Post[] getPostHistory() {
         return Arrays.copyOf(allPost, allPost.length);
