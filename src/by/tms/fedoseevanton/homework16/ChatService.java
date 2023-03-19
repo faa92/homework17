@@ -15,10 +15,10 @@ public class ChatService {
         allPost = new Post[0];
     }
 
-    public boolean addNewPost(User user, String message) throws CheckedException {
+    public boolean addNewPost(User user, String message) throws LimitingNumberOfPublicationsException {
         Instant timeNow = Instant.now();
 
-        isUserHitTimeInterval(user, timeNow);
+        validateUserHitTimeInterval(user, timeNow);
 
         savePost(user, message, timeNow);
 
@@ -31,7 +31,7 @@ public class ChatService {
     }
 
 
-    private void isUserHitTimeInterval(User user, Instant timeNow) throws CheckedException {
+    private void validateUserHitTimeInterval(User user, Instant timeNow) throws LimitingNumberOfPublicationsException {
         int count = 0;
         for (int i = allPost.length - 1; i >= 0; i--) {
             if (allPost[i].getPostCreateTime().isBefore(timeNow.minus(timeIntervalCreatePost))) {
@@ -40,7 +40,7 @@ public class ChatService {
             if ((user.getUserNickName().equals(allPost[i].getAuthorMessage().getUserNickName()))) {
                 count++;
                 if (count == limitPosts) {
-                    throw new CheckedException(allPost[i].getPostCreateTime().plus(timeIntervalCreatePost));
+                    throw new LimitingNumberOfPublicationsException(allPost[i].getPostCreateTime().plus(timeIntervalCreatePost));
                 }
             }
         }

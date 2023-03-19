@@ -32,7 +32,7 @@ public class homework16 {
                         service.addNewPost(user, message);
                         System.out.println("New post add!" + "\n");
 
-                    } catch (CheckedException e) {
+                    } catch (LimitingNumberOfPublicationsException e) {
                         System.out.printf(
                                 "Слишком частые запросы. Повторите через %s секунд\n",
                                 Duration.between(Instant.now(), e.getTimeCanChat()).toSeconds());
