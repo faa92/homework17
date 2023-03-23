@@ -1,6 +1,7 @@
 package by.tms.fedoseevanton.homework16;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -27,10 +28,14 @@ public class homework16 {
                     User user = new User(scanner1.nextLine());
                     System.out.print("Enter message: ");
                     String message = scanner1.nextLine();
-                    if (service.addNewPost(user, message)) {
+                    try {
+                        service.addNewPost(user, message);
                         System.out.println("New post add!" + "\n");
-                    } else {
-                        System.out.println("FLOOD !!!" + "\n");
+
+                    } catch (LimitingNumberOfPublicationsException e) {
+                        System.out.printf(
+                                "Слишком частые запросы. Повторите через %s секунд\n",
+                                Duration.between(Instant.now(), e.getTimeCanChat()).toSeconds());
                     }
                 } while (true);
             }
