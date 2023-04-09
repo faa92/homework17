@@ -39,9 +39,8 @@ public class homework16 {
                 case 2 -> {
                     System.out.println("Chat history: ");
                     for (Object o : service.getPostHistory()) {
-
+                        System.out.println(service.getPostHistory() + "\n");
                     }
-                    System.out.println(service.getPostHistory() + "\n");
                 }
                 case 0 -> {
                     System.exit(0);
