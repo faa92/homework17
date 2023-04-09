@@ -2,7 +2,6 @@ package by.tms.fedoseevanton.homework16;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class homework16 {
@@ -13,16 +12,15 @@ public class homework16 {
         System.out.print("Enter a post limit: ");
         int postLimit = scanner.nextInt();
         ChatService service = new ChatService(postLimit, duration);
-
-        System.out.println("""
-                1. Chat
-                2. History
-                0. Exit""");
-        System.out.print("Your choice: ");
-        int task = scanner.nextInt();
-        switch (task) {
-            case 1 -> {
-                do {
+        while (true) {
+            System.out.println("""
+                    1. Chat
+                    2. History
+                    0. Exit""");
+            System.out.print("Your choice: ");
+            int task = scanner.nextInt();
+            switch (task) {
+                case 1 -> {
                     Scanner scanner1 = new Scanner(System.in);
                     System.out.print("Enter nickname: ");
                     User user = new User(scanner1.nextLine());
@@ -37,17 +35,17 @@ public class homework16 {
                                 "Слишком частые запросы. Повторите через %s секунд\n",
                                 Duration.between(Instant.now(), e.getTimeCanChat()).toSeconds());
                     }
-                } while (true);
-            }
-            case 2 -> {
-                System.out.println("Chat history: ");
-                System.out.println(Arrays.toString(service.getPostHistory()));
-            }
-            case 0 -> {
-                System.exit(0);
+                }
+                case 2 -> {
+                    System.out.println("Chat history: ");
+                    for (Object o : service.getPostHistory()) {
+                        System.out.println(service.getPostHistory() + "\n");
+                    }
+                }
+                case 0 -> {
+                    System.exit(0);
+                }
             }
         }
-
-
     }
 }
